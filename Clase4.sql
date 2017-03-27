@@ -34,8 +34,11 @@ SELECT DISTINCT address, country, city, store_id
 FROM address, store, city, country
 WHERE store_id LIKE 1 
 
--- Ejercicio 7 NO ANDAAAAAA
+-- Ejercicio 7 
 SELECT DISTINCT f1.title, f1.rating, f2.title, f2.rating
 FROM film f1, film f2
-WHERE f1.rating = f2.rating
+WHERE f1.rating = f2.rating AND f1.film_id < f2.film_id
+
+-- Ejercicio 8 no tengo la consigna...
+
 
