@@ -20,14 +20,18 @@ FROM film
 WHERE replacement_cost BETWEEN 20.00 AND 24.00
 
 -- Ejercicio 4
-SELECT DISTINCT title, rating, name, special_features
-FROM film, category
-WHERE film.special_features LIKE '%Behind The Scenes%'
+SELECT DISTINCT a.title, a.rating, name, special_features
+FROM film a, category c, film_category b
+WHERE a.film_id = b.film_id
+AND c.category_id = b.category_id
+AND special_features LIKE '%Behind The Scenes%'
 
 -- Ejercicio 5
-SELECT DISTINCT first_name, last_name, title
-FROM actor, film
-WHERE film.title LIKE '%ZOOLANDER FICTION%'
+SELECT DISTINCT a.first_name, a.last_name, title
+FROM actor a, film c, film_actor b
+WHERE a.actor_id = b.actor_id
+AND c.film_id = b.film_id
+AND title LIKE '%ZOOLANDER FICTION%'
 
 -- Ejercicio 6
 SELECT DISTINCT address, country, city, store_id
@@ -45,5 +49,6 @@ FROM store
 JOIN film
 JOIN staff
 ON store.store_id = '2' AND staff.store_id = store.store_id
+
 
 
