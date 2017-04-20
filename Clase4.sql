@@ -33,10 +33,13 @@ WHERE a.actor_id = b.actor_id
 AND c.film_id = b.film_id
 AND title LIKE '%ZOOLANDER FICTION%'
 
--- Ejercicio 6
+-- Ejercicio 6 
 SELECT DISTINCT address, country, city, store_id
-FROM address, store, city, country
-WHERE store_id LIKE 1 AND store.address_id = address.address_id
+FROM address a, store s, city c1, country c2
+WHERE store_id LIKE 1 
+AND s.address_id = a.address_id 
+AND c1.country_id = c2.country_id
+AND c1.city_id = a.city_id
 
 -- Ejercicio 7 
 SELECT DISTINCT f1.title, f1.rating, f2.title, f2.rating
