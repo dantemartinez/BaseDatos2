@@ -65,3 +65,49 @@ FROM actor_information
 
 
 -- Ejercicio 5
+
+
+select
+	-- Columns showed
+    `a`.`actor_id` AS `actor_id`,
+    `a`.`first_name` AS `first_name`,
+    `a`.`last_name` AS `last_name`,
+    group_concat(
+        distinct concat( `c`.`name`, ': ',( -- concat category name with the title of the film
+        select group_concat( `f`.`title` order by `f`.`title` ASC separator ', ' ) 
+        from(
+        	( `sakila`.`film` `f` join `sakila`.`film_category` `fc` on(( `f`.`film_id` = `fc`.`film_id` ))) -- join film and film_category tables and make sure the film_id is the same
+        join `sakila`.`film_actor` `fa` on(( `f`.`film_id` = `fa`.`film_id` )) -- join film and film_actor tables and make sure the film_id is the same
+        	)
+        where(( `fc`.`category_id` = `c`.`category_id` ) -- condition, the category_id must be the same from film_category and category tables
+        and( `fa`.`actor_id` = `a`.`actor_id` )))) -- condition, the actor_id must be the same from film_actor and actor tables
+    order by
+        `c`.`name` ASC separator '; ' -- order by category name
+    ) AS `film_info`
+from
+    (
+        (
+            (
+                `sakila`.`actor` `a` left join `sakila`.`film_actor` `fa` on 
+                (
+                    (
+                        `a`.`actor_id` = `fa`.`actor_id`  -- join actor with film_actor using actor_id
+                    )
+                )
+            ) left join `sakila`.`film_category` `fc` on
+            (
+                (
+                    `fa`.`film_id` = `fc`.`film_id` -- join film_actor with film_category using film_id
+                )
+            )
+        ) left join `sakila`.`category` `c` on
+        (
+            (
+                `fc`.`category_id` = `c`.`category_id` -- join film_category with category using category_id 
+            )
+        )
+    )
+group by
+    `a`.`actor_id`,
+    `a`.`first_name`,
+    `a`.`last_name` -- group by these columns
