@@ -9,15 +9,11 @@ FROM (
   ORDER BY fat_content
   LIMIT 5;
   
-  SELECT DISTINCT fat_content
-  FROM product_dimension
-  WHERE department_description
-  IN ('Dairy')
-  LIMIT 5;
+-- Te devuelve los 5 productos con el menor fat_content
 
 -- Ejercicio 2
 
-explain SELECT order_number, date_ordered
+
 SELECT order_number, date_ordered
 FROM store.store_orders_fact orders
 WHERE orders.store_key IN (
@@ -29,6 +25,8 @@ AND orders.vendor_key NOT IN (
     FROM public.vendor_dimension
     WHERE vendor_state = 'MA')
 AND date_ordered < '2003-03-01';
+
+-- Te devuelve las ordenes con fecha menor al 2003-03-01 en Massachusetts
 
 -- Ejercicio 3
 
